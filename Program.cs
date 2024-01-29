@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Foods.Repositories;
+using Foods.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -6,6 +8,8 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<Lanche.Context.AppDbContext>(x => x.UseSqlServer(connectionString));
+builder.Services.AddTransient<IFoodsRepository, FoodRepository>();
+builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
 
 var app = builder.Build();
 
